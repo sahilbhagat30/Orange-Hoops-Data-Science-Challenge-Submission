@@ -3,8 +3,8 @@ from utils import load_data
 
 # Set page config
 st.set_page_config(
-    page_title="Player Injury Analysis Dashboard",
-    page_icon="🏃",
+    page_title="SlamCuse Analytics - Syracuse Basketball Analysis Dashboard",
+    page_icon="🏀",
     layout="wide"
 )
 
@@ -25,8 +25,18 @@ def main():
         
         # Right panel - Content
         with col2:
-            st.title("Player Injury Analysis Dashboard")
+            st.title("SlamCuse Analytics 🏀")
+            st.subheader("Insights-Driven Performance and Health for Syracuse Basketball")
             
+            # Introductory description
+            st.markdown("""
+                Welcome to **SlamCuse Analytics**, the dedicated platform for Syracuse basketball insights.
+                Here, data-driven analysis meets elite performance tracking, focusing on injury history,
+                muscle balance, and session metrics to provide a complete view of player health and readiness.
+                Navigate through the tabs to uncover trends and details that support informed training decisions,
+                injury prevention, and overall performance optimization.
+            """)
+
             # Create tabs
             tabs = st.tabs(["Injury History", "Muscle Imbalance", "Sessions"])
             
@@ -51,7 +61,7 @@ def main():
             # Tab selection buttons
             for i, tab in enumerate(tabs):
                 with tab:
-                    if st.button("Select", key=f"tab_{i}"):
+                    if st.button("Load Data", key=f"tab_{i}"):
                         handle_tab_click(i)
                         st.rerun()
                         
