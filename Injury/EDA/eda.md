@@ -62,21 +62,50 @@ This comprehensive analysis of the injury history dataset provides key insights 
    - **Mean**: 0.71 (within ideal range), **Range**: 0.4 to 1.2.
    - **Deviations**: Values below 0.6 indicate hamstring weakness; values above 0.8 suggest quad underuse.
 
+   <img src="Images/hamstring_to_quad_ratio.png" alt="Hamstring to Quad Ratio" width="60%" style="display: block; margin: 20px auto;"/>
+
 9. **Quad Imbalance Percent**:
    - **Mean**: 2.51% (within ideal range), **Range**: -11.5% to 15.2%.
    - **Deviations**: Values below -5% indicate weaker left quad; above 5% indicates stronger right quad.
+
+   <img src="Images/quad_imbalance_percent.png" alt="Quad Imbalance Percent" width="60%" style="display: block; margin: 20px auto;"/>
 
 10. **Hamstring Imbalance Percent**:
    - **Mean**: 0.98% (within ideal range), **Range**: -11.2% to 13.0%.
    - **Deviations**: Values below -5% indicate weaker left hamstring; above 5% indicates stronger right hamstring.
 
+   <img src="Images/hamstring_imbalance_percent.png" alt="Hamstring Imbalance Percent" width="60%" style="display: block; margin: 20px auto;"/>
+
 11. **Calf Imbalance Percent**:
    - **Mean**: 2.42% (within ideal range), **Range**: -11.7% to 14.9%.
    - **Deviations**: Values below -5% indicate weaker left calf; above 5% indicates stronger right calf.
 
+   <img src="Images/calf_imbalance_percent.png" alt="Calf Imbalance Percent" width="60%" style="display: block; margin: 20px auto;"/>
+
 12. **Groin Imbalance Percent**:
    - **Mean**: 2.44% (within ideal range), **Range**: -11.7% to 15.0%.
    - **Deviations**: Values below -5% indicate weaker left groin; above 5% indicates stronger right groin.
+
+   <img src="Images/groin_imbalance_percent.png" alt="Groin Imbalance Percent" width="60%" style="display: block; margin: 20px auto;"/>
+
+13. **Mean distance covered in miles**: 3.51
+
+   <img src="Images/distance_covered_per_session.png" alt="Distance Covered Per Session" width="60%" style="display: block; margin: 20px auto;"/>
+
+14. **Mean Exertion**: 297.30
+
+   <img src="Images/exertion_levels.png" alt="Distribution of Exertion Levels" width="60%" style="display: block; margin: 20px auto;"/>
+   <img src="Images/exertion_levels_over_time.png" alt="Exertion Levels Over Time" width="60%" style="display: block; margin: 20px auto;"/>
+
+15. **Mean Training Impulse**: 197.85
+
+   <img src="Images/training_impulse.png" alt="Dsitribution Of Training Impulse" width="60%" style="display: block; margin: 20px auto;"/>
+
+16. **Mean of Max Jump height in feet**: 2.55
+
+   <img src="Images/maximum_jump_height.png" alt="Maximum Jump Height" width="60%" style="display: block; margin: 20px auto;"/>
+
+17. **Mean heartratebpm**: 119.72
 
 ## Recommendations
 - **Balance Training**: Focus on strengthening weak muscles identified outside the ideal range.
