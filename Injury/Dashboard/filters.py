@@ -68,3 +68,19 @@ def session_filters(session_data, filter_col):
         )
         
     return selected_players, session_data
+
+def performance_filters(performance_data, filter_col):
+    with filter_col:
+        st.header("Performance Filters")
+        
+        # Shooter filter
+        st.subheader("Select Shooters")
+        all_shooters = sorted(performance_data['shooter'].dropna().unique())
+        selected_shooters = st.multiselect(
+            "",
+            options=all_shooters,
+            default=all_shooters[:3] if len(all_shooters) >= 3 else all_shooters,
+            key="performance_shooters"
+        )
+        
+    return selected_shooters

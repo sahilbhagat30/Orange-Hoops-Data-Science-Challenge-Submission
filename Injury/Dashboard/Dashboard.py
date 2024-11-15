@@ -1,5 +1,7 @@
 import streamlit as st
 from utils import load_data
+from prediction_dashboard import render_prediction_tab
+from performance_dashboard import render_performance_tab  # Import the performance tab function
 
 # Set page config
 st.set_page_config(
@@ -10,7 +12,7 @@ st.set_page_config(
 
 # Initialize session state for active tab
 if 'active_tab' not in st.session_state:
-    st.session_state.active_tab = 0  # 0 for Injury History, 1 for Muscle Imbalance, 2 for Sessions
+    st.session_state.active_tab = 0  # 0 for Injury History, 1 for Muscle Imbalance, 2 for Sessions, 3 for Prediction, 4 for Performance
 
 def handle_tab_click(tab_index):
     st.session_state.active_tab = tab_index
@@ -18,7 +20,7 @@ def handle_tab_click(tab_index):
 def main():
     try:
         # Load all data
-        muscle_imbalance, sessions, injury_history = load_data()
+        muscle_imbalance, sessions, injury_history, performance_data = load_data()
         
         # Create two columns - left for filters, right for content
         col1, col2 = st.columns([1, 4])
@@ -38,7 +40,7 @@ def main():
             """)
 
             # Create tabs
-            tabs = st.tabs(["Injury History", "Muscle Imbalance", "Sessions"])
+            tabs = st.tabs(["Injury History", "Muscle Imbalance", "Sessions", "Prediction", "Performance"])  # Add Performance tab
             
             # Clear previous filters
             with col1:
@@ -57,7 +59,13 @@ def main():
                 with tabs[2]:
                     from sessions_dashboard import render_sessions_tab
                     render_sessions_tab(sessions, col1)
-            
+            elif st.session_state.active_tab == 3:
+                with tabs[3]:
+                    render_prediction_tab()
+            elif st.session_state.active_tab == 4:
+                with tabs[4]:
+                    render_performance_tab(performance_data)  # Call the performance tab function
+
             # Tab selection buttons
             for i, tab in enumerate(tabs):
                 with tab:

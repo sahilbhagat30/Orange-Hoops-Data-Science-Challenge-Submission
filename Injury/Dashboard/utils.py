@@ -15,6 +15,7 @@ def load_data():
         sessions = pd.read_csv('Injury/Data/injury_history(player_sessions).csv', 
                              encoding='ISO-8859-1',
                              engine='python')
+        performance_data = pd.read_csv('Performance/Syracuse_Basketball.csv')  # Load performance data
         
         # Convert dates and ensure proper data types for injury_history
         injury_history['Injury Date'] = pd.to_datetime(injury_history['Injury Date'])
@@ -26,9 +27,8 @@ def load_data():
         # Add Month column for monthly analysis
         muscle_imbalance['Month'] = muscle_imbalance['Date Recorded'].dt.month
 
-        
-        return muscle_imbalance, sessions, injury_history
+        return muscle_imbalance, sessions, injury_history, performance_data  # Return performance data as well
         
     except Exception as e:
         st.error(f"Error loading data: {str(e)}")
-        return None, None, None
+        return None, None, None, None
