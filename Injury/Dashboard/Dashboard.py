@@ -1,7 +1,8 @@
 import streamlit as st
 from utils import load_data
 from prediction_dashboard import render_prediction_tab
-from performance_dashboard import render_performance_tab  # Import the performance tab function
+from performance_dashboard import render_performance_tab
+from performance_prediction_dashboard import render_performance_prediction_tab  # Import the new prediction tab function
 
 # Set page config
 st.set_page_config(
@@ -12,7 +13,7 @@ st.set_page_config(
 
 # Initialize session state for active tab
 if 'active_tab' not in st.session_state:
-    st.session_state.active_tab = 0  # 0 for Injury History, 1 for Muscle Imbalance, 2 for Sessions, 3 for Prediction, 4 for Performance
+    st.session_state.active_tab = 0  # 0 for Injury History, 1 for Muscle Imbalance, 2 for Sessions, 3 for Prediction, 4 for Performance, 5 for Performance Prediction
 
 def handle_tab_click(tab_index):
     st.session_state.active_tab = tab_index
@@ -40,7 +41,7 @@ def main():
             """)
 
             # Create tabs
-            tabs = st.tabs(["Injury History", "Muscle Imbalance", "Sessions", "Prediction", "Performance"])  # Add Performance tab
+            tabs = st.tabs(["Injury History", "Muscle Imbalance", "Sessions", "Prediction", "Performance", "Performance Prediction"])  # Add Performance Prediction tab
             
             # Clear previous filters
             with col1:
@@ -64,7 +65,10 @@ def main():
                     render_prediction_tab()
             elif st.session_state.active_tab == 4:
                 with tabs[4]:
-                    render_performance_tab(performance_data)  # Call the performance tab function
+                    render_performance_tab(performance_data, col1)
+            elif st.session_state.active_tab == 5:
+                with tabs[5]:
+                    render_performance_prediction_tab()  # Call the new performance prediction tab function
 
             # Tab selection buttons
             for i, tab in enumerate(tabs):
