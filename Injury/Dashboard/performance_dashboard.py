@@ -102,48 +102,13 @@ def render_performance_tab(performance_data, filter_col):
             plt.title("Distribution of Shot Types")
             st.pyplot(fig4)
             plt.close()
-        
-        # Winning Shot Prediction
-        st.subheader("Predict Winning Shot Player")
-        
-        # Input form for prediction
-        with st.form("prediction_form"):
-            shooting_success_rate = st.number_input("Shooting Success Rate", min_value=0.0, max_value=1.0, value=0.5)
-            recent_performance = st.number_input("Recent Performance", min_value=0.0, max_value=1.0, value=0.5)
-            win_prob_gap = st.number_input("Win Probability Gap", min_value=0.0, max_value=1.0, value=0.1)
-            possession_length = st.number_input("Possession Length", min_value=0, max_value=100, value=30)
-            scoring_streak = st.number_input("Scoring Streak", min_value=0, max_value=10, value=0)
-            time_remaining = st.number_input("Time Remaining", min_value=0, max_value=300, value=120)
-            home_team_advantage = st.selectbox("Home Team Advantage", [0, 1])
-            high_pressure = st.selectbox("High Pressure", [0, 1])
-            possession_change = st.selectbox("Possession Change", [0, 1])
-            clutch_5min_success_rate = st.number_input("5-Min Clutch Success Rate", min_value=0.0, max_value=1.0, value=0.5)
-            clutch_2min_success_rate = st.number_input("2-Min Clutch Success Rate", min_value=0.0, max_value=1.0, value=0.5)
-            final_shot_success_rate = st.number_input("Final Shot Success Rate", min_value=0.0, max_value=1.0, value=0.5)
             
-            submitted = st.form_submit_button("Predict")
-        
-        if submitted:
-            # Prepare input data for prediction
-            input_data = np.array([[
-                shooting_success_rate, recent_performance, win_prob_gap, possession_length,
-                scoring_streak, time_remaining, home_team_advantage, high_pressure,
-                possession_change, clutch_5min_success_rate, clutch_2min_success_rate,
-                final_shot_success_rate
-            ]])
-            
-            # Load or train the model
-            model = RandomForestClassifier(random_state=42)
-            # Assuming the model is already trained, otherwise train it here
-            
-            # Predict the winning shot player
-            prediction = model.predict(input_data)
-            
-            # Display the predicted player
-            if prediction[0] == 1:
-                st.success("The recommended player for the winning shot is: Judah Mintz")
-            else:
-                st.warning("No player was predicted as the best choice for the winning shot.")
-        
+            # Display detailed performance table
+        st.subheader("Performance Details")
+        st.dataframe(
+            filtered_data[['shooter', 'date', 'shot_outcome', 'three_pt', 'free_throw', 'scoring_play']],
+            use_container_width=True
+        )
+                    
     except Exception as e:
         st.error(f"An error occurred in render_performance_tab: {str(e)}")

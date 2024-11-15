@@ -1,8 +1,8 @@
 import streamlit as st
 from utils import load_data
-from prediction_dashboard import render_prediction_tab
 from performance_dashboard import render_performance_tab
-from performance_prediction_dashboard import render_performance_prediction_tab  # Import the new prediction tab function
+from performance_prediction_dashboard import render_performance_prediction_tab
+from injury_prediction_dashboard import render_injury_prediction_tab
 
 # Set page config
 st.set_page_config(
@@ -13,7 +13,7 @@ st.set_page_config(
 
 # Initialize session state for active tab
 if 'active_tab' not in st.session_state:
-    st.session_state.active_tab = 0  # 0 for Injury History, 1 for Muscle Imbalance, 2 for Sessions, 3 for Prediction, 4 for Performance, 5 for Performance Prediction
+    st.session_state.active_tab = 0  # 0 for Injury History, 1 for Muscle Imbalance, 2 for Sessions, 3 for Performance, 4 for Performance Prediction, 5 for Injury Prediction
 
 def handle_tab_click(tab_index):
     st.session_state.active_tab = tab_index
@@ -39,9 +39,9 @@ def main():
                 Navigate through the tabs to uncover trends and details that support informed training decisions,
                 injury prevention, and overall performance optimization.
             """)
-
+            
             # Create tabs
-            tabs = st.tabs(["Injury History", "Muscle Imbalance", "Sessions", "Prediction", "Performance", "Performance Prediction"])  # Add Performance Prediction tab
+            tabs = st.tabs(["Injury History", "Muscle Imbalance", "Sessions", "Performance", "Performance Prediction", "Injury Prediction"])
             
             # Clear previous filters
             with col1:
@@ -62,14 +62,14 @@ def main():
                     render_sessions_tab(sessions, col1)
             elif st.session_state.active_tab == 3:
                 with tabs[3]:
-                    render_prediction_tab()
+                    render_performance_tab(performance_data, col1)
             elif st.session_state.active_tab == 4:
                 with tabs[4]:
-                    render_performance_tab(performance_data, col1)
+                    render_performance_prediction_tab()
             elif st.session_state.active_tab == 5:
                 with tabs[5]:
-                    render_performance_prediction_tab()  # Call the new performance prediction tab function
-
+                    render_injury_prediction_tab()
+            
             # Tab selection buttons
             for i, tab in enumerate(tabs):
                 with tab:

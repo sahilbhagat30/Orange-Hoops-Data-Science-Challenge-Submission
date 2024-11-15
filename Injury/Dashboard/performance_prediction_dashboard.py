@@ -1,48 +1,46 @@
 import streamlit as st
 import numpy as np
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
+import pickle
 
 def render_performance_prediction_tab():
     st.header("Performance Prediction")
 
-    # Load your dataset
-    # For demonstration, let's assume you have a function to load your data
-    data = load_your_data_function()  # Replace with your actual data loading function
-
-    # Define features and target
-    X = data[['shooting_success_rate', 'recent_performance', 'win_prob_gap', 'possession_length',
-              'scoring_streak', 'time_remaining', 'home_team_advantage', 'high_pressure',
-              'possession_change', '5min_clutch_success_rate', '2min_clutch_success_rate',
-              'final_shot_success_rate']]
-    y = data['successful_shot']
-
-    # Split data into train and test sets
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-    # Train the model
-    model = RandomForestClassifier(random_state=42)
-    model.fit(X_train, y_train)
+    # Load the pre-trained model
+    try:
+        with open('Performance/winning_shot_model.pkl', 'rb') as file:
+            model = pickle.load(file)
+    except FileNotFoundError:
+        st.error("Model file not found. Please ensure 'winning_shot_model.pkl' is in the correct directory.")
+        return
 
     # Input form for prediction
     with st.form("performance_prediction_form"):
-        shooting_success_rate = st.number_input("Shooting Success Rate", min_value=0.0, max_value=1.0, value=0.5)
-        recent_performance = st.number_input("Recent Performance", min_value=0.0, max_value=1.0, value=0.5)
-        win_prob_gap = st.number_input("Win Probability Gap", min_value=0.0, max_value=1.0, value=0.1)
-        possession_length = st.number_input("Possession Length", min_value=0, max_value=100, value=30)
-        scoring_streak = st.number_input("Scoring Streak", min_value=0, max_value=10, value=0)
-        time_remaining = st.number_input("Time Remaining", min_value=0, max_value=300, value=120)
-        home_team_advantage = st.selectbox("Home Team Advantage", [0, 1])
-        high_pressure = st.selectbox("High Pressure", [0, 1])
-        possession_change = st.selectbox("Possession Change", [0, 1])
-        clutch_5min_success_rate = st.number_input("5-Min Clutch Success Rate", min_value=0.0, max_value=1.0, value=0.5)
-        clutch_2min_success_rate = st.number_input("2-Min Clutch Success Rate", min_value=0.0, max_value=1.0, value=0.5)
-        final_shot_success_rate = st.number_input("Final Shot Success Rate", min_value=0.0, max_value=1.0, value=0.5)
+        st.markdown("### Input Player Performance Metrics")
+        
+        shooting_success_rate = st.slider("Shooting Success Rate", 0.0, 1.0, 0.5)
+        recent_performance = st.slider("Recent Performance", 0.0, 1.0, 0.5)
+        win_prob_gap = st.slider("Win Probability Gap", 0.0, 1.0, 0.1)
+        possession_length = st.slider("Possession Length", 0, 100, 30)
+        scoring_streak = st.slider("Scoring Streak", 0, 10, 0)
+        time_remaining = st.slider("Time Remaining (seconds)", 0, 300, 120)
+        
+        # Use descriptive labels for binary options
+        home_team_advantage = st.radio("Home Team Advantage", ["No", "Yes"], index=0)
+        high_pressure = st.radio("High Pressure", ["No", "Yes"], index=0)
+        possession_change = st.radio("Possession Change", ["No", "Yes"], index=0)
+        
+        clutch_5min_success_rate = st.slider("5-Min Clutch Success Rate", 0.0, 1.0, 0.5)
+        clutch_2min_success_rate = st.slider("2-Min Clutch Success Rate", 0.0, 1.0, 0.5)
+        final_shot_success_rate = st.slider("Final Shot Success Rate", 0.0, 1.0, 0.5)
         
         submitted = st.form_submit_button("Predict")
     
     if submitted:
+        # Convert descriptive labels back to binary values
+        home_team_advantage = 1 if home_team_advantage == "Yes" else 0
+        high_pressure = 1 if high_pressure == "Yes" else 0
+        possession_change = 1 if possession_change == "Yes" else 0
+
         # Prepare input data for prediction
         input_data = np.array([[
             shooting_success_rate, recent_performance, win_prob_gap, possession_length,
